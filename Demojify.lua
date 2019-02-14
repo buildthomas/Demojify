@@ -1,8 +1,9 @@
 --[[
-  Demojify: function to strip emoji-like characters from strings
+	Demojify.lua
+	A function to strip emoji-like codepoints from strings.
   
-	Author: buildthomas, July 2017
-	This module is licensed under MIT, review the LICENSE file or go to:
+	This module is licensed under MIT, review the LICENSE file or:
+	https://github.com/buildthomas/Demojify/blob/master/LICENSE
 --]]
 
 local function lookupify(t)
