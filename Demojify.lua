@@ -5,7 +5,6 @@
 	This module is licensed under MIT, review the LICENSE file or go to:
 --]]
 
--- Helper function
 local function lookupify(t)
 	local r = {}
 	for _,v in pairs(t) do
@@ -67,23 +66,23 @@ local blockedSingles = lookupify {
 -- Demojify function
 return function(str)
 	
-	-- Non-emoji characters
-	local characters = {}
+	-- Array that will contain non-emoji codepoints in string
+	local codepoints = {}
 	
-	-- Loop over characters in input
-	for _,v in utf8.codes(str) do
+	-- Loop over codepoints in input
+	for _, codepoint in utf8.codes(str) do
 		
 		-- Assume innocent until proven guilty
 		local insert = true
 		
 		-- Check if singular blocked
-		if blockedSingles[v] then
+		if blockedSingles[codepoint] then
 			insert = false
 		else
 			-- Check all ranges
-			for i,w in pairs(blockedRanges) do
-				if w[1] <= v and v <= w[2] then
-					-- Character is in an emoji range
+			for _, range in pairs(blockedRanges) do
+				if range[1] <= codepoint and codepoint <= range[2] then
+					-- Codepoint is in an emoji range
 					insert = false
 					break
 				end
@@ -92,11 +91,10 @@ return function(str)
 		
 		-- Only insert into table if proven non-emoji
 		if insert then
-			table.insert(characters, v)
+			table.insert(codepoints, codepoint)
 		end
 	end
 	
-	-- Return string without emojis
-	return utf8.char(unpack(characters))
-	
+	-- Return string without emoji codepoints
+	return utf8.char(unpack(codepoints))
 end
