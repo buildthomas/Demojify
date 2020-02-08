@@ -8,7 +8,7 @@
 
 local function lookupify(t)
 	local r = {}
-	for _,v in pairs(t) do
+	for _, v in pairs(t) do
 		r[v] = true
 	end
 	return r
@@ -81,7 +81,7 @@ return function(str)
 			insert = false
 		else
 			-- Check all ranges
-			for _, range in pairs(blockedRanges) do
+			for _, range in ipairs(blockedRanges) do
 				if range[1] <= codepoint and codepoint <= range[2] then
 					-- Codepoint is in an emoji range
 					insert = false
